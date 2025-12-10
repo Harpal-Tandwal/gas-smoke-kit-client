@@ -9,11 +9,17 @@ const deviceSchema = new mongoose.Schema({
     kitName: {
         type: String,
         required: true,
-        unique: true   // each sensor kit name should be unique
+        unique: true
     },
-    mobileNumber: {
-        type: String,
-        required: true
+    mobileNumbers: {
+        type: [String],
+        required: true,
+        validate: {
+            validator: function (arr) {
+                return arr.length >= 1 && arr.length <= 3;
+            },
+            message: "You can store only 1 to 3 mobile numbers"
+        }
     }
 }, { timestamps: true });
 
