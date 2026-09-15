@@ -15,3 +15,25 @@ WHERE t.is_ms_shipped = 0
 ORDER BY s.name, t.name;
 
 EXEC sp_executesql @SQL;
+
+
+
+
+SELECT
+    TABLE_SCHEMA AS SchemaName,
+    TABLE_NAME AS TableName,
+    ORDINAL_POSITION AS ColumnOrder,
+    COLUMN_NAME AS ColumnName,
+    DATA_TYPE AS DataType,
+    CASE
+        WHEN CHARACTER_MAXIMUM_LENGTH = -1 THEN 'MAX'
+        ELSE CAST(CHARACTER_MAXIMUM_LENGTH AS VARCHAR(20))
+    END AS MaxLength,
+    NUMERIC_PRECISION AS NumericPrecision,
+    NUMERIC_SCALE AS NumericScale,
+    IS_NULLABLE AS IsNullable
+FROM INFORMATION_SCHEMA.COLUMNS
+ORDER BY
+    TABLE_SCHEMA,
+    TABLE_NAME,
+    ORDINAL_POSITION;
