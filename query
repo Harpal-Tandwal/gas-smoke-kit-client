@@ -1,0 +1,17 @@
+USE SQUAD;
+GO
+
+DECLARE @SQL NVARCHAR(MAX) = N'';
+
+SELECT @SQL = @SQL +
+    N'SELECT TOP (6) ' +
+    N'''' + s.name + N'.' + t.name + N''' AS TableName, * ' +
+    N'FROM ' + QUOTENAME(s.name) + N'.' + QUOTENAME(t.name) + N';' +
+    CHAR(13) + CHAR(10)
+FROM sys.tables t
+INNER JOIN sys.schemas s
+    ON t.schema_id = s.schema_id
+WHERE t.is_ms_shipped = 0
+ORDER BY s.name, t.name;
+
+EXEC sp_executesql @SQL;
