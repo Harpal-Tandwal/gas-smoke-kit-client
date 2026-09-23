@@ -1,5 +1,2 @@
-Hyper-V Requirements:
-    VM Monitor Mode Extensions: Yes
-    Virtualization Enabled In Firmware: Yes
-    Second Level Address Translation: Yes
-    Data Execution Prevention Available: Yes
+netsh advfirewall firewall delete rule name="File and Printer Sharing (Echo Request - ICMPv4-In)"
+netsh advfirewall firewall add rule name="Allow Ping from 192.168.0.135" dir=in action=allow protocol=icmpv4:8,any remoteip=192.168.0.135
