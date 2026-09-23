@@ -1,39 +1,5 @@
-USE SQUAD;
-GO
-
-DECLARE @SQL NVARCHAR(MAX) = N'';
-
-SELECT @SQL = @SQL +
-    N'SELECT TOP (6) ' +
-    N'''' + s.name + N'.' + t.name + N''' AS TableName, * ' +
-    N'FROM ' + QUOTENAME(s.name) + N'.' + QUOTENAME(t.name) + N';' +
-    CHAR(13) + CHAR(10)
-FROM sys.tables t
-INNER JOIN sys.schemas s
-    ON t.schema_id = s.schema_id
-WHERE t.is_ms_shipped = 0
-ORDER BY s.name, t.name;
-
-EXEC sp_executesql @SQL;
-
-
-
-
-SELECT
-    TABLE_SCHEMA AS SchemaName,
-    TABLE_NAME AS TableName,
-    ORDINAL_POSITION AS ColumnOrder,
-    COLUMN_NAME AS ColumnName,
-    DATA_TYPE AS DataType,
-    CASE
-        WHEN CHARACTER_MAXIMUM_LENGTH = -1 THEN 'MAX'
-        ELSE CAST(CHARACTER_MAXIMUM_LENGTH AS VARCHAR(20))
-    END AS MaxLength,
-    NUMERIC_PRECISION AS NumericPrecision,
-    NUMERIC_SCALE AS NumericScale,
-    IS_NULLABLE AS IsNullable
-FROM INFORMATION_SCHEMA.COLUMNS
-ORDER BY
-    TABLE_SCHEMA,
-    TABLE_NAME,
-    ORDINAL_POSITION;
+Hyper-V Requirements:
+    VM Monitor Mode Extensions: Yes
+    Virtualization Enabled In Firmware: Yes
+    Second Level Address Translation: Yes
+    Data Execution Prevention Available: Yes
